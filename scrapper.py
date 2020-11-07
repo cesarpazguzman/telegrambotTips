@@ -2,7 +2,7 @@ import time
 from bs4 import BeautifulSoup
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium import webdriver
-
+import trendLive
 
 def check_exists_by_xpath(driver, xpath):
     try:
@@ -37,6 +37,8 @@ def get_stats_match_lives(options, analizar):
                 int(estado.split(":")[0].replace('+',''))) > 88 \
                 or estado == "Finalizado":
             analizar_eliminar.append(url)
+            trendLive.remove_match_tracking(url.replace("https://www.flashscore.es/partido/", "")
+                                            .replace("/#estadisticas-del-partido;0", ""))
             continue
 
         if estado == "Descanso" or int(estado.split(":")[0]) < 12:
@@ -74,6 +76,7 @@ def get_stats_match_lives(options, analizar):
                 break
 
         res.append(stats)
+        trendLive.add_values_match(stats)
 
     driver.quit()
 

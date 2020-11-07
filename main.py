@@ -64,7 +64,7 @@ if __name__ == '__main__':
         rules = rulesManager.get_dict_file('rules/rule_1.json')
         partidos_rules = rulesManager.get_matches_filtered(partidos, rules, [])
 
-        telegramBot.send_matches_telegram(partidos_rules, TOKEN, chat_id)
+        telegramBot.send_matches_telegram(partidos, TOKEN, chat_id)
 
         contador += 3
-        time.sleep(180)
+        #time.sleep(180)
