@@ -1,0 +1,34 @@
+{
+  "description": "Bet: Team Clean Sheet (No)",
+  "cases": {
+    "case1": {
+      "posesion": {"over": 55 },
+      "goals": {"equal": 0},
+      "goalsOpponent": {"under": 2},
+      "minute": {"over": 20},
+      "dif_goals_attemps": {"over": 4}
+    },
+    "case2": {
+      "posesion": {"over": 55 },
+      "goals": {"equal": 0},
+      "goalsOpponent": {"under": 2},
+      "minute": {"over": 20, "under": 45},
+      "dif_attacks": {"over": 30},
+      "dif_dangerous_attacks": {"over": 15}
+    },
+    "case3": {
+      "posesion": {"over": 55 },
+      "goals": {"equal": 0},
+      "goalsOpponent": {"under": 2},
+      "minute": {"over": 45},
+      "dif_attacks": {"over": 50},
+      "dif_dangerous_attacks": {"over": 20}
+    },
+    "case3": {
+      "posesion": {"over": 55 },
+      "goals": {"equal": 0},
+      "goalsOpponent": {"under": 2},
+      "dif_corners": {"over": 5}
+    }
+  }
+}
