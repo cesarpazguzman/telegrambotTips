@@ -13,6 +13,7 @@ def add_values_match(match):
         matches_tracking[match_id] = {}
 
     matches_tracking[match_id][minute] = {
+        'Resultado':match['Resultado'],
         'Goles':{'L':match['Resultado'].split('-')[0], 'V':match['Resultado'].split('-')[1]},
         'Remates':{'L':match['Remates']['Local'], 'V':match['Remates']['Vis']},
         'RematesPuerta': {'L': match['Remates a puerta']['Local'], 'V': match['Remates a puerta']['Vis']},
@@ -38,15 +39,17 @@ def get_match_trend(match, last_min=15):
     #If the first tracking is lower than 'last_min' I return it because is the lowest.
     if int(list(match_track.keys())[0])>min_dif:
         return get_dif_var_match(match_track[int(list(match_track.keys())[0])],
-                                 match_track[int(list(match_track.keys())[-1])])
+                                 match_track[int(list(match_track.keys())[-1])],
+                                 int(list(match_track.keys())[0]))
 
     for minute in match_track:
         if minute > min_dif:
-            return get_dif_var_match(match_track[minute], match_track[int(list(match_track.keys())[-1])])
+            return get_dif_var_match(match_track[minute], match_track[int(list(match_track.keys())[-1])],minute)
 
 
-def get_dif_var_match(match_min1, match_min2):
+def get_dif_var_match(match_min1, match_min2, desde):
     return {
+        'Desde':desde,'ResultadoDesde':match_min1['Resultado'],
         'Goles':{'L':int(match_min2['Goles']['L'])-int(match_min1['Goles']['L']),
                  'V':int(match_min2['Goles']['V'])-int(match_min1['Goles']['V'])},
         'Remates': {'L': int(match_min2['Remates']['L']) - int(match_min1['Remates']['L']),

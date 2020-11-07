@@ -29,15 +29,13 @@ Pos:{4}/{5}, Remates:{6}({8})/{7}({9})
 T.Libres:{10}/{11}, Paradas:{14}/{15}
 Córners:{12}/{13}, Faltas:{16}/{17}
 Tarjetas:{18}/{19}, Ataques:{20}/{21}
-At. Peligrosos:{22}/{23}
-Pases:{27}/{28}
-CuotaL:{24}, CuotaV:{25}
+Peligrosos:{22}/{23}
+1:{24}, 2:{25}, 1X:{44}, X2:{45}
 
--------DIF 15 MIN---------
-Pos:{29}/{30}, Remates:{31}({41})/{32}({42}),
-Pases:{33}/{34}, Córners:{35}/{36},
-Ataques:{37}/{38}
-At. Peligrosos:{39}/{40} ```""" \
+----Stats desde min.{43}, {46}---------
+Pos:{29}%/{30}%, Remates:{31}({41})/{32}({42}),
+Córners:{35}/{36}, Ataques:{37}/{38}
+Peligrosos:{39}/{40} ```""" \
         .format(a["Local"], a["Vis"], a["Estado"].replace(" ", ""), a["Resultado"].replace(" ", ""),
                 get_val(a, "Posesión de balón", "Local").replace(' ', ''),
                 get_val(a, "Posesión de balón", "Vis").replace(' ', ''),
@@ -54,4 +52,5 @@ At. Peligrosos:{39}/{40} ```""" \
                 trend['Pases']['L'], trend['Pases']['V'], trend['Corner']['L'], trend['Corner']['V'],
                 trend['Ataques']['L'], trend['Ataques']['V'],
                 trend['Ataques peligrosos']['L'], trend['Ataques peligrosos']['V'],
-                trend['RematesPuerta']['L'], trend['RematesPuerta']['V'])
+                trend['RematesPuerta']['L'], trend['RematesPuerta']['V'], trend['Desde'],a["cuota1X"], a["cuotaX2"],
+                trend['ResultadoDesde'])

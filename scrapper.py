@@ -56,9 +56,12 @@ def get_stats_match_lives(options, analizar):
         #    continue
 
         cuotas = soup.find(id="default-live-odds").find_all("span", {"class": "odds value"})
+        cuotaX2 = round(1.0 / (1 - (1.0 / float(cuotas[0].get_text().replace('\n', '')) - 0.05)), 0)
+        cuota1X = round(1.0 / (1 - (1.0 / float(cuotas[2].get_text().replace('\n', '')) - 0.05)), 0)
         stats = {"Estado": estado, "Local": local, "Vis": visitante, "Resultado": resultado,
                  "cuotaL": cuotas and cuotas[0].get_text().replace('\n', '') or -1,
                  "cuotaV": cuotas and cuotas[2].get_text().replace('\n', '') or -1,
+                 "cuota1X":cuota1X, "cuotaX2":cuotaX2,
                  "ID": url.replace("https://www.flashscore.es/partido/", "").replace("/#estadisticas-del-partido;0",
                                                                                      "")}
 
