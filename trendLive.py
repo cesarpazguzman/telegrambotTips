@@ -67,3 +67,22 @@ def get_dif_var_match(match_min1, match_min2, desde):
         'Ataques peligrosos': {'L': int(match_min2['Ataques peligrosos']['L'])-int(match_min1['Ataques peligrosos']['L']),
                     'V': int(match_min2['Ataques peligrosos']['V']) - int(match_min1['Ataques peligrosos']['V'])},
     }
+
+def get_stats_by_minute(match):
+    current_minute = int(match['Estado'].split(':')[0])
+    cornerL = match['Córneres']['Local'] if 'Córneres' in match else 0
+    cornerV = match['Córneres']['Vis'] if 'Córneres' in match else 0
+    ataquesL = match['Ataques']['Local'] if 'Ataques' in match else 0
+    ataquesV = match['Ataques']['Vis'] if 'Ataques' in match else 0
+    peligrososL = match['Ataques peligrosos']['Local'] if 'Ataques peligrosos' in match else 0
+    peligrososV = match['Ataques peligrosos']['Vis'] if 'Ataques peligrosos' in match else 0
+    return {
+        'Remates':{'L':round(float(match['Remates']['Local'])/current_minute,2),
+                   'V':round(float(match['Remates']['Vis'])/current_minute,2)},
+        'Ataques': {'L': round(float(ataquesL) / current_minute , 2),
+                    'V': round(float(ataquesV) / current_minute , 2)},
+        'Corners': {'L': round(float(cornerL) / current_minute , 2),
+                    'V': round(float(cornerV) / current_minute , 2)},
+        'Peligrosos': {'L': round(float(peligrososL) / current_minute, 2),
+                    'V': round(float(peligrososV) / current_minute, 2)}
+    }

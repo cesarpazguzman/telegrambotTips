@@ -6,7 +6,9 @@
       "goals": {"equal": 0},
       "goalsOpponent": {"under": 2},
       "minute": {"over": 20},
-      "dif_goals_attemps": {"over": 4}
+      "dif_goals_attemps": {"over": 4},
+      "rematesByMin": {"over": 0.09},
+      "ataquesByMin": {"over": 0.9}
     },
     "case2": {
       "posesion": {"over": 55 },
@@ -14,6 +16,8 @@
       "goalsOpponent": {"under": 2},
       "minute": {"over": 20, "under": 45},
       "dif_attacks": {"over": 30},
+      "rematesByMin": {"over": 0.09},
+      "ataquesByMin": {"over": 0.9},
       "dif_dangerous_attacks": {"over": 15}
     },
     "case3": {
@@ -22,13 +26,31 @@
       "goalsOpponent": {"under": 2},
       "minute": {"over": 45},
       "dif_attacks": {"over": 50},
+      "rematesByMin": {"over": 0.09},
+      "ataquesByMin": {"over": 0.9},
       "dif_dangerous_attacks": {"over": 20}
     },
-    "case3": {
+    "case4": {
       "posesion": {"over": 55 },
       "goals": {"equal": 0},
       "goalsOpponent": {"under": 2},
+      "rematesByMin": {"over": 0.09},
+      "ataquesByMin": {"over": 0.9},
       "dif_corners": {"over": 5}
+    },
+    "case5": {
+      "posesion": {"over": 52 },
+      "goals": {"equal": 0},
+      "rematesByMin": {"over": 0.12},
+      "ataquesByMin": {"over": 1}
+    },
+
+    "case6": {
+      "posesion": {"over": 52 },
+      "empate": 1,
+      "goals": {"under": 2},
+      "rematesByMin": {"over": 0.12},
+      "ataquesByMin": {"over": 1}
     }
   }
 }

@@ -55,9 +55,20 @@ def get_stats_match_lives(options, analizar):
         #    analizar.remove(url)
         #    continue
 
-        cuotas = soup.find(id="default-live-odds").find_all("span", {"class": "odds value"})
-        cuotaX2 = round(1.0 / (1 - (1.0 / float(cuotas[0].get_text().replace('\n', '')) - 0.05)), 0)
-        cuota1X = round(1.0 / (1 - (1.0 / float(cuotas[2].get_text().replace('\n', '')) - 0.05)), 0)
+        try:
+            cuotas = soup.find(id="default-live-odds").find_all("span", {"class": "odds value"})
+        except:
+            cuotas = None
+        try:
+            cuotaX2 = round(1.0 / (1 - (1.0 / float(cuotas[0].get_text().replace('\n', '')) - 0.05)), 2)
+        except:
+            cuotaX2= -1
+
+        try:
+            cuota1X = round(1.0 / (1 - (1.0 / float(cuotas[2].get_text().replace('\n', '')) - 0.05)), 2)
+        except:
+            cuota1X= -1
+
         stats = {"Estado": estado, "Local": local, "Vis": visitante, "Resultado": resultado,
                  "cuotaL": cuotas and cuotas[0].get_text().replace('\n', '') or -1,
                  "cuotaV": cuotas and cuotas[2].get_text().replace('\n', '') or -1,

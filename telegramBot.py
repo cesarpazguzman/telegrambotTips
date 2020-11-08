@@ -20,6 +20,7 @@ def get_mensaje(a):
         return d[key1][key2]
 
     trend = trendLive.get_match_trend(a)
+    stats_bm = trendLive.get_stats_by_minute(a)
 
     return """
 ** {0} vs {1} ({26})** 
@@ -32,10 +33,16 @@ Tarjetas:{18}/{19}, Ataques:{20}/{21}
 Peligrosos:{22}/{23}
 1:{24}, 2:{25}, 1X:{44}, X2:{45}
 
-----Stats desde min.{43}, {46}---------
+----Stats min.{43}, {46}----
 Pos:{29}%/{30}%, Remates:{31}({41})/{32}({42}),
 Córners:{35}/{36}, Ataques:{37}/{38}
-Peligrosos:{39}/{40} ```""" \
+Peligrosos:{39}/{40} 
+
+----Stats por minuto-----
+Remates:{47}/{48}
+Ataques:{49}/{50}
+Peligrosos:{53}/{54}
+Corners:{51}/{52}```""" \
         .format(a["Local"], a["Vis"], a["Estado"].replace(" ", ""), a["Resultado"].replace(" ", ""),
                 get_val(a, "Posesión de balón", "Local").replace(' ', ''),
                 get_val(a, "Posesión de balón", "Vis").replace(' ', ''),
@@ -53,4 +60,6 @@ Peligrosos:{39}/{40} ```""" \
                 trend['Ataques']['L'], trend['Ataques']['V'],
                 trend['Ataques peligrosos']['L'], trend['Ataques peligrosos']['V'],
                 trend['RematesPuerta']['L'], trend['RematesPuerta']['V'], trend['Desde'],a["cuota1X"], a["cuotaX2"],
-                trend['ResultadoDesde'])
+                trend['ResultadoDesde'],
+                stats_bm['Remates']['L'], stats_bm['Remates']['V'],stats_bm['Ataques']['L'], stats_bm['Ataques']['V'],
+                stats_bm['Corners']['L'], stats_bm['Corners']['V'],stats_bm['Peligrosos']['L'], stats_bm['Peligrosos']['V'])

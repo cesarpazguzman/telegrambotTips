@@ -1,4 +1,5 @@
 import json
+import trendLive
 
 
 def get_dict_file(file_path):
@@ -15,6 +16,8 @@ def get_match_candidate(match, rule, lado):
     opponent = "Vis"
     if lado == "Vis": opponent = "Local"
 
+    stats_by_minute = trendLive.get_stats_by_minute(match)
+
     if "over" in rule["posesion"] and \
             rule["posesion"]["over"] > float(match["Posesión de balón"][lado].replace('%', '')):
         return False
@@ -23,15 +26,21 @@ def get_match_candidate(match, rule, lado):
             rule["posesion"]["under"] < float(match["Posesión de balón"][lado].replace('%', '')):
         return False
 
-    goals = int(match["Resultado"].split("-")[0 if lado == "Local" else 1])
-    if "equal" in rule["goals"] and rule["goals"]["equal"] != goals: return False
-    if "over" in rule["goals"] and rule["goals"]["over"] > goals: return False
-    if "under" in rule["goals"] and rule["goals"]["under"] < goals: return False
+    if "goals" in rule:
+        goals = int(match["Resultado"].split("-")[0 if lado == "Local" else 1])
+        if "equal" in rule["goals"] and rule["goals"]["equal"] != goals: return False
+        if "over" in rule["goals"] and rule["goals"]["over"] > goals: return False
+        if "under" in rule["goals"] and rule["goals"]["under"] < goals: return False
 
-    goalsOpponent = int(match["Resultado"].split("-")[1 if lado == "Local" else 0])
-    if "equal" in rule["goalsOpponent"] and rule["goalsOpponent"]["equal"] != goalsOpponent: return False
-    if "over" in rule["goalsOpponent"] and rule["goalsOpponent"]["over"] > goalsOpponent: return False
-    if "under" in rule["goalsOpponent"] and rule["goalsOpponent"]["under"] < goalsOpponent: return False
+    if "empate" in rule and rule['empate'] == 1:
+        if int(match["Resultado"].split("-")[0]) != int(match["Resultado"].split("-")[1]):
+            return False
+
+    if "goalsOpponent" in rule:
+        goalsOpponent = int(match["Resultado"].split("-")[1 if lado == "Local" else 0])
+        if "equal" in rule["goalsOpponent"] and rule["goalsOpponent"]["equal"] != goalsOpponent: return False
+        if "over" in rule["goalsOpponent"] and rule["goalsOpponent"]["over"] > goalsOpponent: return False
+        if "under" in rule["goalsOpponent"] and rule["goalsOpponent"]["under"] < goalsOpponent: return False
 
     if "minute" in rule:
         if match["Estado"] == "Descanso":
@@ -65,6 +74,17 @@ def get_match_candidate(match, rule, lado):
         if "under" in rule["dif_corners"] and \
                 rule["dif_corners"]["under"] < dif_corners: return False
 
+    if "rematesByMin" in rule:
+        if "over" in rule["rematesByMin"] and \
+                rule["rematesByMin"]["over"] > stats_by_minute["Remates"][lado[0]]: return False
+        if "under" in rule["rematesByMin"] and \
+                rule["rematesByMin"]["under"] < stats_by_minute["Remates"][lado[0]]: return False
+
+    if "ataquesByMin" in rule:
+        if "over" in rule["ataquesByMin"] and \
+                rule["ataquesByMin"]["over"] > stats_by_minute["Ataques"][lado[0]]: return False
+        if "under" in rule["ataquesByMin"] and \
+                rule["ataquesByMin"]["under"] < stats_by_minute["Ataques"][lado[0]]: return False
 
     return True
 
@@ -75,12 +95,12 @@ def get_matches_filtered(matches, rules_to_filter, matches_filter=[]):
     for match in matches:
         if match in matches_filter: continue
 
-        print("match", match["Estado"],match["Local"],match["Vis"], match["Resultado"],
-              match["Posesión de balón"]["Local"],match["Posesión de balón"]["Vis"],
-              match["Remates"]["Local"],match["Remates"]["Vis"],
-              match["Ataques"]["Local"],match["Ataques"]["Vis"],
+        print("match", match["Estado"], match["Local"], match["Vis"], match["Resultado"],
+              match["Posesión de balón"]["Local"], match["Posesión de balón"]["Vis"],
+              match["Remates"]["Local"], match["Remates"]["Vis"],
+              match["Ataques"]["Local"], match["Ataques"]["Vis"],
               match["Ataques peligrosos"]["Local"], match["Ataques peligrosos"]["Vis"],
-              match["Córneres"]["Local"],match["Córneres"]["Vis"])
+              match["Córneres"]["Local"], match["Córneres"]["Vis"])
         for rule in rules_to_filter:
             if get_match_candidate(match, rule, "Local") or get_match_candidate(match, rule, "Vis"):
                 res.append(match)
