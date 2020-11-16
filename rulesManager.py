@@ -18,6 +18,9 @@ def get_match_candidate(match, rule, lado):
 
     stats_by_minute = trendLive.get_stats_by_minute(match)
 
+    if "Tarjetas rojas" in match:
+        return True
+
     if "over" in rule["posesion"] and \
             rule["posesion"]["over"] > float(match["Posesión de balón"][lado].replace('%', '')):
         return False
@@ -55,7 +58,7 @@ def get_match_candidate(match, rule, lado):
         if "over" in rule["dif_goals_attemps"] and rule["dif_goals_attemps"]["over"] > dif_goals_attemps: return False
         if "under" in rule["dif_goals_attemps"] and rule["dif_goals_attemps"]["under"] < dif_goals_attemps: return False
 
-    if "dif_attacks" in rule:
+    if "dif_attacks" in rule and 'Ataques' in match:
         dif_attacks = int(match["Ataques"][lado]) - int(match["Ataques"][opponent])
         if "over" in rule["dif_attacks"] and rule["dif_attacks"]["over"] > dif_attacks: return False
         if "under" in rule["dif_attacks"] and rule["dif_attacks"]["under"] < dif_attacks: return False
@@ -95,12 +98,6 @@ def get_matches_filtered(matches, rules_to_filter, matches_filter=[]):
     for match in matches:
         if match in matches_filter: continue
 
-        print("match", match["Estado"], match["Local"], match["Vis"], match["Resultado"],
-              match["Posesión de balón"]["Local"], match["Posesión de balón"]["Vis"],
-              match["Remates"]["Local"], match["Remates"]["Vis"],
-              match["Ataques"]["Local"], match["Ataques"]["Vis"],
-              match["Ataques peligrosos"]["Local"], match["Ataques peligrosos"]["Vis"],
-              match["Córneres"]["Local"], match["Córneres"]["Vis"])
         for rule in rules_to_filter:
             if get_match_candidate(match, rule, "Local") or get_match_candidate(match, rule, "Vis"):
                 res.append(match)

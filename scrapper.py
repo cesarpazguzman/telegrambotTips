@@ -34,7 +34,7 @@ def get_stats_match_lives(options, analizar):
             estado = estado[1].get_text()
 
         if not estado or isinstance(estado, bool) or (estado!="Descanso" and
-                int(estado.split(":")[0].replace('+',''))) > 88 \
+                int(estado.split(":")[0].replace('+',''))) > 80 \
                 or estado == "Finalizado":
             analizar_eliminar.append(url)
             trendLive.remove_match_tracking(url.replace("https://www.flashscore.es/partido/", "")

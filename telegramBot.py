@@ -23,20 +23,18 @@ def get_mensaje(a):
     stats_bm = trendLive.get_stats_by_minute(a)
 
     return """
-** {0} vs {1} ({26})** 
+ ** {0} vs {1}{55} ** 
 ```
 Resultado:{3}, Minuto:{2}
 Pos:{4}/{5}, Remates:{6}({8})/{7}({9})
-T.Libres:{10}/{11}, Paradas:{14}/{15}
-Córners:{12}/{13}, Faltas:{16}/{17}
-Tarjetas:{18}/{19}, Ataques:{20}/{21}
-Peligrosos:{22}/{23}
+Paradas:{14}/{15}, Córners:{12}/{13}, 
+Ataques:{20}/{21}, Peligr.:{22}%/{23}%
 1:{24}, 2:{25}, 1X:{44}, X2:{45}
 
 ----Stats min.{43}, {46}----
 Pos:{29}%/{30}%, Remates:{31}({41})/{32}({42}),
 Córners:{35}/{36}, Ataques:{37}/{38}
-Peligrosos:{39}/{40} 
+Peligrosos:{39}%/{40}% 
 
 ----Stats por minuto-----
 Remates:{47}/{48}
@@ -53,13 +51,17 @@ Corners:{51}/{52}```""" \
                 get_val(a, "Paradas", "Vis"),
                 get_val(a, "Faltas", "Local"), get_val(a, "Faltas", "Vis"), get_val(a, "Tarjetas amarillas", "Local"),
                 get_val(a, "Tarjetas amarillas", "Vis"), get_val(a, "Ataques", "Local"), get_val(a, "Ataques", "Vis"),
-                get_val(a, "Ataques peligrosos", "Local"), get_val(a, "Ataques peligrosos", "Vis"),
+                round(int(get_val(a, "Ataques peligrosos", "Local"))/int(get_val(a, "Ataques", "Local"))*100,0),
+                round(int(get_val(a, "Ataques peligrosos", "Vis"))/int(get_val(a, "Ataques", "Vis"))*100,0),
                 a["cuotaL"], a["cuotaV"], a["ID"], get_val(a,'Pases totales', 'Local'), get_val(a,'Pases totales','Vis'),
                 trend['Posesion']['L'], trend['Posesion']['V'], trend['Remates']['L'], trend['Remates']['V'],
                 trend['Pases']['L'], trend['Pases']['V'], trend['Corner']['L'], trend['Corner']['V'],
                 trend['Ataques']['L'], trend['Ataques']['V'],
-                trend['Ataques peligrosos']['L'], trend['Ataques peligrosos']['V'],
+                round(int(trend['Ataques peligrosos']['L'])/max(int(trend['Ataques']['L']),1)*100,0),
+                round(int(trend['Ataques peligrosos']['V'])/max(int(trend['Ataques']['V']),1)*100,0),
                 trend['RematesPuerta']['L'], trend['RematesPuerta']['V'], trend['Desde'],a["cuota1X"], a["cuotaX2"],
                 trend['ResultadoDesde'],
                 stats_bm['Remates']['L'], stats_bm['Remates']['V'],stats_bm['Ataques']['L'], stats_bm['Ataques']['V'],
-                stats_bm['Corners']['L'], stats_bm['Corners']['V'],stats_bm['Peligrosos']['L'], stats_bm['Peligrosos']['V'])
+                stats_bm['Corners']['L'], stats_bm['Corners']['V'],stats_bm['Peligrosos']['L'],
+                stats_bm['Peligrosos']['V'],
+                " - Hay rojas" if get_val(a, "Tarjetas rojas", "Vis")+get_val(a, "Tarjetas rojas", "Local")>-2 else "")
