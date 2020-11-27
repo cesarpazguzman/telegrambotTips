@@ -122,14 +122,13 @@ def get_matches_live2(driver, analizar_eliminar=[]):
 
     c = driver.page_source
     soup = BeautifulSoup(c, "html.parser")
-    all = soup.find_all("div", {"class": "event__match"})
+    all = soup.find_all("div", {"class": "event__match--live"})
 
     for partido in all:
-        if partido.find("img"):
-            url = "https://www.flashscore.es/partido/{0}/#estadisticas-del-partido;0".format(
-                partido.get("id").replace("g_1_", ""))
-            if url not in analizar_eliminar:
-                analizar.append(url)
+        url = "https://www.flashscore.es/partido/{0}/#estadisticas-del-partido;0".format(
+            partido.get("id").replace("g_1_", ""))
+        if url not in analizar_eliminar:
+            analizar.append(url)
 
     print(len(analizar), analizar)
 

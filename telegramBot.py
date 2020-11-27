@@ -51,8 +51,8 @@ Corners:{51}/{52}```""" \
                 get_val(a, "Paradas", "Vis"),
                 get_val(a, "Faltas", "Local"), get_val(a, "Faltas", "Vis"), get_val(a, "Tarjetas amarillas", "Local"),
                 get_val(a, "Tarjetas amarillas", "Vis"), get_val(a, "Ataques", "Local"), get_val(a, "Ataques", "Vis"),
-                round(int(get_val(a, "Ataques peligrosos", "Local"))/int(get_val(a, "Ataques", "Local"))*100,0),
-                round(int(get_val(a, "Ataques peligrosos", "Vis"))/int(get_val(a, "Ataques", "Vis"))*100,0),
+                round(int(get_val(a, "Ataques peligrosos", "Local"))/max(int(get_val(a, "Ataques", "Local")),1)*100,0),
+                round(int(get_val(a, "Ataques peligrosos", "Vis"))/max(int(get_val(a, "Ataques", "Vis")),1)*100,0),
                 a["cuotaL"], a["cuotaV"], a["ID"], get_val(a,'Pases totales', 'Local'), get_val(a,'Pases totales','Vis'),
                 trend['Posesion']['L'], trend['Posesion']['V'], trend['Remates']['L'], trend['Remates']['V'],
                 trend['Pases']['L'], trend['Pases']['V'], trend['Corner']['L'], trend['Corner']['V'],
@@ -64,4 +64,4 @@ Corners:{51}/{52}```""" \
                 stats_bm['Remates']['L'], stats_bm['Remates']['V'],stats_bm['Ataques']['L'], stats_bm['Ataques']['V'],
                 stats_bm['Corners']['L'], stats_bm['Corners']['V'],stats_bm['Peligrosos']['L'],
                 stats_bm['Peligrosos']['V'],
-                " - Hay rojas" if get_val(a, "Tarjetas rojas", "Vis")+get_val(a, "Tarjetas rojas", "Local")>-2 else "")
+                " - Hay rojas" if int(get_val(a, "Tarjetas rojas", "Vis"))+int(get_val(a, "Tarjetas rojas", "Local"))>-2 else "")

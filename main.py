@@ -8,7 +8,7 @@ import rulesManager
 
 TOKEN = '1097115710:AAGOk1iuEbKtSadxa8sPu8LAdMfnQ7yu-Hk'  # Ponemos nuestro Token generado con el @BotFather
 chat_id = "170999676"
-# chatid = "-425394805"
+#chat_id = "-425394805"
 
 if __name__ == '__main__':
     #exit(0)
@@ -25,13 +25,13 @@ if __name__ == '__main__':
 
     #exit(0)
     contador = 0
-    analizar = scrapper.get_matches_live2(driver)
+    analizar = scrapper.get_matches_live2(driver, [])
     analizar_eliminar = []
     while True:
 
         #Cada 30 minutos actualizamos los partidos live
         if contador == 30:
-            analizar = scrapper.get_matches_live(driver, analizar_eliminar)
+            analizar = scrapper.get_matches_live2(driver, analizar_eliminar)
             contador = 0
 
         partidos = []
